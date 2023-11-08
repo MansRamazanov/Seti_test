@@ -24,8 +24,12 @@
     <h1 class="header-text">Mansur Ramazanov Test</h1>
   </header>
 <main class="main">
-  <router-link to="/"></router-link>
-  <router-view />
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
 </main>
 </template>
 <script>
@@ -43,7 +47,7 @@ body {
   width: 100vw;
   height: 100vh;
   background-image: url("./img/2020-07-rick-and-morty-4k-8k-free-ultra-hd-pictures-backgrounds-images1.jpg");
-  background-size: 100vw 100vh;
+  background-size: 100% 100%;
 }
 
 .header {
@@ -92,12 +96,5 @@ body {
 
 .logo {
   max-width: 200px;
-}
-
-.main {
-    width: 80vw;
-    height: 50vh;
-    margin: 0 auto;
-    margin-top: 50px;
 }
 </style>
