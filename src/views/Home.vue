@@ -1,52 +1,54 @@
 <template>
   <div class="container">
+    <input type="text" v-model="searchString" />
+    <button @click="clearSearch">clear</button>
     <ul>
-    <li v-for="personInfo in personInfoStore" :key="personInfoStore.id">
-      <div class="list">
-        <img
-          :src="personInfoStore.image"
-          alt=""
-          class="item_img"
-        />
-        <div class="item_info">
-          <p>Name: {{ personInfoStore.name }}</p>
-          <p>Species: {{ personInfoStore.species }}</p>
-          <!-- <p>Episodes: {{ item.episode }}</p> -->
+      <li v-for="person in characterList" :key="person.id">
+        <div class="list">
+          <img :src="person.image" alt="" class="item_img" />
+          <div class="item_info">
+            <RouterLink :to="getCharacterLocation(person)">
+              lol
+            </RouterLink>
+            <p>Name: {{ person.name }}</p>
+            <p>Species: {{ person.species }}</p>
+            <!-- <p>Episodes: {{ item.episode }}</p> -->
+          </div>
         </div>
-      </div>
-    </li>
-  </ul>
+      </li>
+    </ul>
   </div>
 </template>
 
-<script>
-import { usePersonInfoStore } from '../stores/personInfo'
+<script setup>
+import { usePersonInfoStore } from "../stores/personsInfo";
+import { onMounted, ref, computed } from "vue";
+import { storeToRefs } from 'pinia'
 
-const personInfoStore = usePersonInfoStore()
-// export default {
-//   name: "Home",
-//   components: {},
-// };
+const personsStore = usePersonInfoStore();
+const { persons } = storeToRefs(personsStore);
+const { getPersonInfo } = personsStore;
 
-// import axios from 'axios';
+const searchString = ref('');
 
-// export default {
-//   data() {
-//     return {
-//       items: []
-//     }
-//   },
-// mounted() {
-//   axios.get('https://rickandmortyapi.com/api/character')
-//   .then(response => this.items = response.data.results)
-// },
-// methods() {
-//   console.log(items)
-// },
-// }
+const characterList = computed(() => {
+  if (!searchString.value) return persons.value;
 
+  console.log(searchString.value)
+  return persons.value.filter(character => character.name.includes(searchString.value));
+})
 
+function getCharacterLocation(character) {
+  return { path: 'character', query: { id: character.id } }
+}
 
+function clearSearch() {
+  searchString.value = ''
+}
+
+onMounted(() => {
+  getPersonInfo()
+});
 </script>
 
 <style>
@@ -86,7 +88,6 @@ const personInfoStore = usePersonInfoStore()
 
 .item_info {
   margin-left: 30px;
-display: inline-block;
+  display: inline-block;
 }
-
 </style>

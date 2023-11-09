@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import {usePersonInfoStore} from '../stores/personsInfo'
 import Home from '../views/Home.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')
+  },
+  {
+    path: '/character',
+    name: 'character',
+    component: () => import(/* webpackChunkName: "character" */ '../views/Character.vue')
   },
   {
     path: '/about',
@@ -24,10 +30,7 @@ const router = createRouter({
 
 
 router.beforeEach((to) => {
-  console.log('index')
-  const store = useStore()
-
-  if (to.meta.requiresAuth && !store.isLoggedIn) return '/login'
+  if (to.meta.requiresAuth && !PersonInfoStore.isLoggedIn) return '/login'
 })
 
 export default router

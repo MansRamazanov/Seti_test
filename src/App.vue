@@ -9,7 +9,7 @@
         />
         <input class="search-input" type="text" placeholder="Имя персонажа" />
         <select class="search-select" name="status">
-            <option class="search-select-option" value="">Status</option>
+          <option class="search-select-option" value="">Status</option>
           <option class="search-select-option" value="alive">Alive</option>
           <option class="search-select-option" value="dead">Dead</option>
           <option class="search-select-option" value="unknown">Unknown</option>
@@ -23,14 +23,13 @@
     />
     <h1 class="header-text">Mansur Ramazanov Test</h1>
   </header>
-<main class="main">
-  <router-link to="/"></router-link>
-  <router-view />
-</main>
+  <main class="main">
+    <router-link to="/"></router-link>
+    <router-view />
+  </main>
 </template>
-<script>
 
-</script>
+<script></script>
 
 <style>
 * {
@@ -59,7 +58,7 @@ body {
 }
 
 .search-input {
-    margin-left: 10px;
+  margin-left: 10px;
   background: transparent;
   border: none;
   border-bottom: 1px solid #444;
@@ -67,14 +66,14 @@ body {
 }
 
 .search-select {
-    margin-left: 10px;
+  margin-left: 10px;
   background: transparent;
   border: none;
   color: white;
 }
 
 .search-select-option {
-    color: black;
+  color: black;
 }
 
 .search-container {
@@ -95,9 +94,9 @@ body {
 }
 
 .main {
-    width: 80vw;
-    height: 50vh;
-    margin: 0 auto;
-    margin-top: 50px;
+  width: 80vw;
+  height: 50vh;
+  margin: 0 auto;
+  margin-top: 50px;
 }
 </style>
