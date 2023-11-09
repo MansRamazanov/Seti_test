@@ -1,16 +1,16 @@
 <template>
   <div class="container">
     <ul>
-    <li v-for="item in items" :key="item.id">
+    <li v-for="personInfo in personInfoStore" :key="personInfoStore.id">
       <div class="list">
         <img
-          :src="item.image"
+          :src="personInfoStore.image"
           alt=""
           class="item_img"
         />
         <div class="item_info">
-          <p>Name: {{ item.name }}</p>
-          <p>Species: {{ item.species }}</p>
+          <p>Name: {{ personInfoStore.name }}</p>
+          <p>Species: {{ personInfoStore.species }}</p>
           <!-- <p>Episodes: {{ item.episode }}</p> -->
         </div>
       </div>
@@ -20,27 +20,32 @@
 </template>
 
 <script>
+import { usePersonInfoStore } from '../stores/personInfo'
+
+const personInfoStore = usePersonInfoStore()
 // export default {
 //   name: "Home",
 //   components: {},
 // };
 
-import axios from 'axios';
+// import axios from 'axios';
 
-export default {
-  data() {
-    return {
-      items: []
-    }
-  },
-mounted() {
-  axios.get('https://rickandmortyapi.com/api/character')
-  .then(response => this.items = response.data.results)
-},
-methods() {
-  console.log(items)
-},
-}
+// export default {
+//   data() {
+//     return {
+//       items: []
+//     }
+//   },
+// mounted() {
+//   axios.get('https://rickandmortyapi.com/api/character')
+//   .then(response => this.items = response.data.results)
+// },
+// methods() {
+//   console.log(items)
+// },
+// }
+
+
 
 </script>
 

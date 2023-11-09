@@ -22,4 +22,12 @@ const router = createRouter({
   routes
 })
 
+
+router.beforeEach((to) => {
+  console.log('index')
+  const store = useStore()
+
+  if (to.meta.requiresAuth && !store.isLoggedIn) return '/login'
+})
+
 export default router
