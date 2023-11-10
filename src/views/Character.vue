@@ -1,7 +1,14 @@
 <template>
   <div>
-    <div v-if="isFound">
-      {{ character }}
+    <div v-if="isFound" class="character_container">
+      <img :src="character.image" alt="" />
+      <div class="text_container">
+        <p class="character_text">Name: {{ character.name }}</p>
+        <p class="character_text">Species: {{ character.species }}</p>
+        <p class="character_text">Location: {{ character.location.name }}</p>
+              <!-- {{ character }} -->
+      </div>
+
     </div>
     <div v-else-if="isLoading">loading</div>
     <div v-else>not found</div>
@@ -22,10 +29,28 @@ const { getCharacter } = characterStore;
 const isFound = computed(() => state.value === CHARACTER_STATE.FOUND);
 const isLoading = computed(() => state.value === CHARACTER_STATE.LOADING);
 
+// console.log(chatacterStore)
+
 onMounted(async () => {
-  console.log(route);
+  // console.log(route);
   const id = route.query.id;
 
   await getCharacter(id);
 });
 </script>
+
+<style>
+
+.character_container {
+  display: flex;
+}
+
+.character_text {
+  font-size: 30px;
+}
+
+.text_container {
+margin-left: 40px;
+}
+
+</style>

@@ -2,42 +2,42 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import axios from "axios";
 
-export const CHARACTER_STATE = {
+export const EPISODE_STATE = {
   FOUND: "found",
   LOADING: "loading",
   NOT_FOUND: "not found",
 };
 
-export const useCharacterStore = defineStore("characterStore", () => {
-  const character = ref();
-  const state = ref(CHARACTER_STATE.LOADING);
+export const useEpisodeStore = defineStore("episodeStore", () => {
+  const episode = ref();
+  const state = ref(EPISODE_STATE.LOADING);
 
-  async function getCharacter(id) {
+  async function getEpisode(id) {
     if (!id) {
-      state.value = CHARACTER_STATE.NOT_FOUND;
+      state.value = EPISODE_STATE.NOT_FOUND;
       return;
     }
 
-    state.value = CHARACTER_STATE.FOUND;
+    state.value = EPISODE_STATE.FOUND;
 
     try {
       const response = await axios.get(
-        `https://rickandmortyapi.com/api/character/${id}`
+        `https://rickandmortyapi.com/api/episode/${id}`
       );
-      const characterData = response.data;
+      const episodeData = response.data;
       console.log(response.data)
 
       if (!characterData) {
-        state.value = CHARACTER_STATE.NOT_FOUND;
+        state.value = EPISODE_STATE.NOT_FOUND;
         return;
       }
 
       // characterData.episodes = await getEpisodes(characterData.episode);
-      state.value = CHARACTER_STATE.FOUND;
-      character.value = characterData;
+      state.value = EPISODE_STATE.FOUND;
+      episode.value = episodeData;
     } catch (error) {
       console.error(error);
-      state.value = CHARACTER_STATE.NOT_FOUND;
+      state.value = EPISODE_STATE.NOT_FOUND;
       return;
     }
   }

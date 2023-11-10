@@ -7,12 +7,11 @@
         <div class="list">
           <img :src="person.image" alt="" class="item_img" />
           <div class="item_info">
-            <RouterLink :to="getCharacterLocation(person)">
-              lol
-            </RouterLink>
-            <p>Name: {{ person.name }}</p>
+            <p>Name: <RouterLink :to="getCharacterLocation(person)">
+              {{ person.name }}
+            </RouterLink></p>
             <p>Species: {{ person.species }}</p>
-            <!-- <p>Episodes: {{ item.episode }}</p> -->
+            <p>Episodes: <RouterLink :to="getEpisodeLocation(episode)">{{ person.episode.slice(0,5) }}</RouterLink> </p>
           </div>
         </div>
       </li>
@@ -31,6 +30,8 @@ const { getPersonInfo } = personsStore;
 
 const searchString = ref('');
 
+// const episodes = person.episode.slice(0,5)
+
 const characterList = computed(() => {
   if (!searchString.value) return persons.value;
 
@@ -40,6 +41,10 @@ const characterList = computed(() => {
 
 function getCharacterLocation(character) {
   return { path: 'character', query: { id: character.id } }
+}
+
+function getEpisodeLocation(episode) {
+  return { path: 'episode', query: { id: episode.episode.id } }
 }
 
 function clearSearch() {
@@ -53,7 +58,8 @@ onMounted(() => {
 
 <style>
 * {
-  color: azure;
+  color: rgb(104, 209, 167);
+  font-size: 18px;
 }
 .container {
   max-height: 50vh;
@@ -82,8 +88,8 @@ onMounted(() => {
 }
 
 .item_img {
-  width: 100px;
-  height: 100px;
+  width: 110px;
+  height: 110px;
 }
 
 .item_info {

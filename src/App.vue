@@ -16,11 +16,13 @@
         </select>
       </div>
     </div>
-    <img
+    <RouterLink :to="{name: 'home'}"><img
       src="./img/Rick_and_Morty.svg.png"
       alt="логотип Рик и Морти"
       class="logo"
     />
+            </RouterLink>
+    
     <h1 class="header-text">Mansur Ramazanov Test</h1>
   </header>
   <main class="main">
@@ -29,7 +31,9 @@
   </main>
 </template>
 
-<script></script>
+<script>
+
+</script>
 
 <style>
 * {
