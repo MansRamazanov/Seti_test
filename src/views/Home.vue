@@ -51,9 +51,10 @@ const personsStore = usePersonInfoStore();
 const { persons } = storeToRefs(personsStore);
 const { getPersonInfo } = personsStore;
 
+
 const searchString = ref('');
 
-// console.log(persons)
+// console.log(personsStore)
 
 
 
@@ -64,6 +65,7 @@ const characterList = computed(() => {
   return persons.value.filter(character => character.name.includes(searchString.value));
 })
 
+console.log(usePersonInfoStore())
 // console.log(characterList)
 
 // const episodeList = computed(() => {
@@ -79,7 +81,7 @@ const characterList = computed(() => {
 // }) 
 
 
-
+// 
 
 function getCharacterLocation(character) {
   // console.log(character)
@@ -93,9 +95,10 @@ function getEpisodeLocation(episode) {
   return { path: '/episode', query: { id: episode.id }
 }}
 
-// onMounted(async() => {
-//   await getPersonInfo()
-// });
+
+onMounted(async() => {
+  await getPersonInfo()
+});
 
 
 </script>
@@ -140,7 +143,7 @@ function getEpisodeLocation(episode) {
 .item_info {
   margin-left: 30px;
   display: inline-block;
-  min-width: 170px;
+  width: 170px;
 }
 
 .episode_list-container{

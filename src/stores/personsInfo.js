@@ -20,14 +20,14 @@ export const usePersonInfoStore = defineStore("personInfoStore", () => {
 
       const personsData = response.data.results;
       persons.value = personsData ;
-      // console.log(persons.value);
 
       console.log(personsData)
+      console.log(persons.value)
       
       personsData.forEach(async (person) =>{
         
         await getEpisodes(person)
-        // console.log(person.episode)
+        // console.log(person)
       })
       
       // personsData.episodes = await getEpisodes(personsData.episode); 
@@ -38,10 +38,10 @@ export const usePersonInfoStore = defineStore("personInfoStore", () => {
   }
 
     async function getEpisodes(person) {
-      // console.log(episodeUrls)
-      person.episode = await Promise.all(person.episode.slice(0, 5).map(episode =>axios.get(`${episode}`)));
+      // console.log(episodeUrls)person
+      person.episode = await Promise.all(person.episode.slice(0, 5).map(episode => axios.get(`${episode}`)));
     }
 
-  return { persons, getPersonInfo };
+  return { persons, getPersonInfo, getEpisodes };
 });
 
