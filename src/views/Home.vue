@@ -1,7 +1,21 @@
 <template>
+  <div class="search-container">
+      <div class="search">
+        <img
+          src="../img/search-icon.svg"
+          alt="иконка поиска"
+          class="search-icon"
+        />
+        <input class="search-input" type="text" placeholder="Имя персонажа" v-model="searchString"/>
+        <select class="search-select" name="status">
+          <option class="search-select-option" value="">Status</option>
+          <option class="search-select-option" value="alive">Alive</option>
+          <option class="search-select-option" value="dead">Dead</option>
+          <option class="search-select-option" value="unknown">Unknown</option>
+        </select>
+      </div>
+    </div>
   <div class="container">
-    <input type="text" v-model="searchString" />
-    <button @click="clearSearch">clear</button>
     <ul>
       <li v-for="person in characterList" :key="person.id">
         <div class="list">
@@ -11,7 +25,12 @@
               {{ person.name }}
             </RouterLink></p>
             <p>Species: {{ person.species }}</p>
-            <p>Episodes: <RouterLink :to="getEpisodeLocation(episode)">{{ person.episode.slice(0,5) }}</RouterLink> </p>
+          </div>
+          <div class="episode_list-container">
+            <p>Episodes:  </p>
+            <ul class="episode_list">
+              <li v-for="episode in episodeList" :key="episode.id"> <RouterLink :to="getEpisodeLocation(episode)">{{ episode.url }}</RouterLink></li>
+            </ul>
           </div>
         </div>
       </li>
@@ -30,26 +49,39 @@ const { getPersonInfo } = personsStore;
 
 const searchString = ref('');
 
-// const episodes = person.episode.slice(0,5)
+
+
+
 
 const characterList = computed(() => {
   if (!searchString.value) return persons.value;
 
-  console.log(searchString.value)
+  // console.log(searchString.value)
   return persons.value.filter(character => character.name.includes(searchString.value));
 })
+
+// console.log(characterList)
+
+const episodeList = computed(() => {
+  persons.value.forEach(elem => {
+    console.log(elem.episode)
+    // elem.episode.forEach(el => {
+    //   // console.log(el.data)
+    //   el.data
+    // })
+  })
+}) 
+
+episodeList
 
 function getCharacterLocation(character) {
   return { path: 'character', query: { id: character.id } }
 }
 
 function getEpisodeLocation(episode) {
-  return { path: 'episode', query: { id: episode.episode.id } }
-}
 
-function clearSearch() {
-  searchString.value = ''
-}
+  return { path: 'episode', query: { id: episode.id }
+}}
 
 onMounted(() => {
   getPersonInfo()
@@ -62,6 +94,7 @@ onMounted(() => {
   font-size: 18px;
 }
 .container {
+  margin-top: 20px;
   max-height: 50vh;
   overflow: auto;
 }
@@ -95,5 +128,49 @@ onMounted(() => {
 .item_info {
   margin-left: 30px;
   display: inline-block;
+  min-width: 170px;
 }
+
+.episode_list-container{
+  margin-left: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.episode_list {
+margin-left: 15px;
+}
+
+.search-input {
+  margin-left: 10px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #444;
+  color: white;
+}
+
+.search-select {
+  margin-left: 10px;
+  background: transparent;
+  border: none;
+  color: white;
+}
+
+.search-select-option {
+  color: black;
+}
+
+.search-container {
+  display: inline-block;
+}
+
+.search-icon {
+  max-width: 30px;
+}
+
+.search {
+  display: flex;
+  align-items: stretch;
+}
+
 </style>

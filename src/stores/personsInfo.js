@@ -5,10 +5,11 @@ import axios from "axios";
 // / -> Home.vue
 // /character?id=Rick Sanchez -> Character.vue
 
+
 export const usePersonInfoStore = defineStore("personInfoStore", () => {
   // TODO: rename
   // characters
-  const persons = ref([]);
+  const persons = ref();
 
   // getCharacters
   async function getPersonInfo() {
@@ -16,13 +17,31 @@ export const usePersonInfoStore = defineStore("personInfoStore", () => {
       const response = await axios.get(
         "https://rickandmortyapi.com/api/character"
       );
-      persons.value = response.data.results;
-      console.log(persons.value);
+
+      const personsData = response.data.results;
+      persons.value = personsData ;
+      // console.log(persons.value);
+
+      // console.log(personsData)
+      
+      personsData.forEach(async (person) =>{
+        
+        await getEpisodes(person)
+        // console.log(person.episode)
+      })
+      
+      // personsData.episodes = await getEpisodes(personsData.episode); 
     } catch (error) {
-      alert(error);
+      console.error(error);
       console.log(error);
     }
   }
 
-  return { persons, getPersonInfo };
+    async function getEpisodes(person) {
+      // console.log(episodeUrls)
+      person.episode = await Promise.all(person.episode.slice(0, 5).map(episode =>axios.get(`${episode}`)));
+    }
+
+  return { persons, getPersonInfo, };
 });
+

@@ -22,13 +22,13 @@ const { getEpisode } = episodeStore;
 const isFound = computed(() => state.value === EPISODE_STATE.FOUND);
 const isLoading = computed(() => state.value === EPISODE_STATE.LOADING);
 
-// console.log(chatacterStore)
+// console.log(episodeStore)
 
 onMounted(async () => {
-  // console.log(route);
+  console.log(route);
   const id = route.query.id;
 
-  await getCharacter(id);
+  await getEpisode(episode);
 });
 </script>
 

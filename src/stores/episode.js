@@ -32,7 +32,7 @@ export const useEpisodeStore = defineStore("episodeStore", () => {
         return;
       }
 
-      // characterData.episodes = await getEpisodes(characterData.episode);
+      // episodeData.characters = await getCharacters(characterData.characters);
       state.value = EPISODE_STATE.FOUND;
       episode.value = episodeData;
     } catch (error) {
@@ -42,9 +42,9 @@ export const useEpisodeStore = defineStore("episodeStore", () => {
     }
   }
 
-  // function getEpisodes(episodeUrls) {
-  //   return Promise.all(episodeUrls.map((url) => axios.get(url)));
+  // function getCharacters(characterUrls) {
+  //   return Promise.all(characterUrls.map((url) => axios.get(url)));
   // }
 
-  return { character, getCharacter, state };
+  return { episode, getEpisode, state };
 });

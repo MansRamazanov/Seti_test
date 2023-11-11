@@ -1,21 +1,6 @@
 <template>
   <header class="header">
-    <div class="search-container">
-      <div class="search">
-        <img
-          src="./img/search-icon.svg"
-          alt="иконка поиска"
-          class="search-icon"
-        />
-        <input class="search-input" type="text" placeholder="Имя персонажа" />
-        <select class="search-select" name="status">
-          <option class="search-select-option" value="">Status</option>
-          <option class="search-select-option" value="alive">Alive</option>
-          <option class="search-select-option" value="dead">Dead</option>
-          <option class="search-select-option" value="unknown">Unknown</option>
-        </select>
-      </div>
-    </div>
+    
     <RouterLink :to="{name: 'home'}"><img
       src="./img/Rick_and_Morty.svg.png"
       alt="логотип Рик и Морти"
@@ -23,7 +8,6 @@
     />
             </RouterLink>
     
-    <h1 class="header-text">Mansur Ramazanov Test</h1>
   </header>
   <main class="main">
     <router-link to="/"></router-link>
@@ -61,37 +45,6 @@ body {
   font-size: 20px;
 }
 
-.search-input {
-  margin-left: 10px;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid #444;
-  color: white;
-}
-
-.search-select {
-  margin-left: 10px;
-  background: transparent;
-  border: none;
-  color: white;
-}
-
-.search-select-option {
-  color: black;
-}
-
-.search-container {
-  display: inline-block;
-}
-
-.search-icon {
-  max-width: 30px;
-}
-
-.search {
-  display: flex;
-  align-items: stretch;
-}
 
 .logo {
   max-width: 200px;
