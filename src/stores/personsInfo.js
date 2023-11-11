@@ -22,7 +22,7 @@ export const usePersonInfoStore = defineStore("personInfoStore", () => {
       persons.value = personsData ;
       // console.log(persons.value);
 
-      // console.log(personsData)
+      console.log(personsData)
       
       personsData.forEach(async (person) =>{
         
@@ -42,6 +42,6 @@ export const usePersonInfoStore = defineStore("personInfoStore", () => {
       person.episode = await Promise.all(person.episode.slice(0, 5).map(episode =>axios.get(`${episode}`)));
     }
 
-  return { persons, getPersonInfo, };
+  return { persons, getPersonInfo };
 });
 

@@ -29,7 +29,11 @@
           <div class="episode_list-container">
             <p>Episodes:  </p>
             <ul class="episode_list">
-              <li v-for="episode in episodeList" :key="episode.id"> <RouterLink :to="getEpisodeLocation(episode)">{{ episode.url }}</RouterLink></li>
+              <li v-for="episode in person.episode" :hey="episode.data.id"> 
+                <RouterLink :to="getEpisodeLocation(episode.data)">
+                  {{ episode.data.name }}
+              </RouterLink>
+            </li>
             </ul>
           </div>
         </div>
@@ -49,7 +53,7 @@ const { getPersonInfo } = personsStore;
 
 const searchString = ref('');
 
-
+// console.log(persons)
 
 
 
@@ -62,30 +66,38 @@ const characterList = computed(() => {
 
 // console.log(characterList)
 
-const episodeList = computed(() => {
-  persons.value.forEach(elem => {
-    console.log(elem.episode)
-    // elem.episode.forEach(el => {
-    //   // console.log(el.data)
-    //   el.data
-    // })
-  })
-}) 
+// const episodeList = computed(() => {
+//   // console.log(persons.value)
+//   persons.value.forEach(elem => {
+//     // console.log(elem.episode)
+//     return elem.episode
+//     // forEach(el => {
+//     //   console.log(el)
+//       // el.data
+//     // })
+//   })
+// }) 
 
-episodeList
+
+
 
 function getCharacterLocation(character) {
-  return { path: 'character', query: { id: character.id } }
+  // console.log(character)
+  return { path: '/character', query: { id: character.id } }
 }
 
 function getEpisodeLocation(episode) {
 
-  return { path: 'episode', query: { id: episode.id }
+  console.log(episode)
+
+  return { path: '/episode', query: { id: episode.id }
 }}
 
-onMounted(() => {
-  getPersonInfo()
-});
+// onMounted(async() => {
+//   await getPersonInfo()
+// });
+
+
 </script>
 
 <style>
@@ -139,6 +151,7 @@ onMounted(() => {
 
 .episode_list {
 margin-left: 15px;
+list-style-type: none;
 }
 
 .search-input {
