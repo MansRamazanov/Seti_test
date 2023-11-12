@@ -20,16 +20,20 @@ export const usePersonInfoStore = defineStore("personInfoStore", () => {
 
       const personsData = response.data.results;
       persons.value = personsData ;
+ 
+      // console.log(personsData)
+      // console.log(persons.value)
+      
+      // let res = await axios.get("https://rickandmortyapi.com/api/episode/1");
+      // console.log(res.data)
 
-      console.log(personsData)
-      console.log(persons.value)
-      
-      personsData.forEach(async (person) =>{
+      await personsData.forEach(async (person) =>{
         
-        await getEpisodes(person)
-        // console.log(person)
+       await getEpisodes(person)
+        // console.log(person.episode[0].data.id)
+        
       })
-      
+
       // personsData.episodes = await getEpisodes(personsData.episode); 
     } catch (error) {
       console.error(error);
@@ -37,9 +41,26 @@ export const usePersonInfoStore = defineStore("personInfoStore", () => {
     }
   }
 
+
+
     async function getEpisodes(person) {
-      // console.log(episodeUrls)person
-      person.episode = await Promise.all(person.episode.slice(0, 5).map(episode => axios.get(`${episode}`)));
+      // console.log(person)
+
+      // const episode_list = person.episode
+
+      // let res = await axios.get("https://rickandmortyapi.com/api/episode/1");
+      // console.log(res.data.result)
+
+      // for (let episode = 0; episode < 5; episode++) {
+        
+      //   // console.log(episode_list[episode])
+      //   let episode_link = episode_list[episode]
+      //   let result = await axios.get(`${episode_link}`)
+      //   console.log(result)
+      // }
+
+      // person.episode = await axios.get(`${person.episode[0]}`)
+      person.episode = await Promise.all(person.episode.slice(0, 5).map(episode => axios.get(`${episode}`)))
     }
 
   return { persons, getPersonInfo, getEpisodes };

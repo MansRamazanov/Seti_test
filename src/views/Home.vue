@@ -29,11 +29,18 @@
           <div class="episode_list-container">
             <p>Episodes:  </p>
             <ul class="episode_list">
-              <li v-for="episode in person.episode" :hey="episode.data.id"> 
-                <RouterLink :to="getEpisodeLocation(episode.data)">
+              <li v-for="episode in person.episode" :key="episode.id"> 
+                <RouterLink :to="getEpisodeLocation(episode)">
+                  {{ console.log("render") }}
                   {{ episode.data.name }}
               </RouterLink>
             </li>
+            <!-- <li> 
+                <RouterLink :to="getEpisodeLocation(person.episode)">
+                  {{ console.log("render") }}
+                  {{ person.episode }}
+              </RouterLink>
+            </li> -->
             </ul>
           </div>
         </div>
@@ -51,11 +58,20 @@ const personsStore = usePersonInfoStore();
 const { persons } = storeToRefs(personsStore);
 const { getPersonInfo } = personsStore;
 
+personsStore = {
+  setup(){
+    onMounted(async() => {
+  console.log("before get info")
+  await getPersonInfo()
+  console.log("after get info")
+});
+  }
+}
+
 
 const searchString = ref('');
 
 // console.log(personsStore)
-
 
 
 const characterList = computed(() => {
@@ -65,7 +81,7 @@ const characterList = computed(() => {
   return persons.value.filter(character => character.name.includes(searchString.value));
 })
 
-console.log(usePersonInfoStore())
+// console.log(usePersonInfoStore())
 // console.log(characterList)
 
 // const episodeList = computed(() => {
@@ -81,8 +97,6 @@ console.log(usePersonInfoStore())
 // }) 
 
 
-// 
-
 function getCharacterLocation(character) {
   // console.log(character)
   return { path: '/character', query: { id: character.id } }
@@ -90,15 +104,15 @@ function getCharacterLocation(character) {
 
 function getEpisodeLocation(episode) {
 
-  console.log(episode)
+  // console.log(episode)
 
-  return { path: '/episode', query: { id: episode.id }
+  return { path: '/episode', query: { id: episode }
 }}
 
 
-onMounted(async() => {
-  await getPersonInfo()
-});
+
+
+
 
 
 </script>
