@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import {usePersonInfoStore} from '../stores/personsInfo'
 import Home from '../views/Home.vue'
 
 const routes = [

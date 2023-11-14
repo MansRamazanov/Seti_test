@@ -17,7 +17,7 @@
 
 <script setup>
 import { useCharacterStore, CHARACTER_STATE } from "../stores/character";
-import { onMounted, ref, computed } from "vue";
+import { onBeforeMount, ref, computed } from "vue";
 import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
 
@@ -31,7 +31,7 @@ const isLoading = computed(() => state.value === CHARACTER_STATE.LOADING);
 
 // console.log(chatacterStore)
 
-onMounted(async () => {
+onBeforeMount(async () => {
   // console.log(route);
   const id = route.query.id;
 

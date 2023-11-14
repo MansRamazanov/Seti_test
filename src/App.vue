@@ -27,8 +27,6 @@
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
   background-image: url("./img/2020-07-rick-and-morty-4k-8k-free-ultra-hd-pictures-backgrounds-images1.jpg");
   background-size: 100vw 100vh;
 }
@@ -51,9 +49,9 @@ body {
 }
 
 .main {
-  width: 80vw;
+  /* width: 80vw;
   height: 50vh;
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 50px; */
 }
 </style>

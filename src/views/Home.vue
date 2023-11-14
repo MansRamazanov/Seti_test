@@ -1,12 +1,10 @@
 <template>
-  <div class="search-container">
+  <div class="container">
+    <div class="list_container">
+      <div class="search-container">
       <div class="search">
-        <img
-          src="../img/search-icon.svg"
-          alt="иконка поиска"
-          class="search-icon"
-        />
-        <input class="search-input" type="text" placeholder="Имя персонажа" v-model="searchString"/>
+        <img src="../img/search-icon.svg" alt="иконка поиска" class="search-icon" />
+        <input class="search-input" type="text" placeholder="Имя персонажа" v-model="searchString" />
         <select class="search-select" name="status">
           <option class="search-select-option" value="">Status</option>
           <option class="search-select-option" value="alive">Alive</option>
@@ -15,106 +13,70 @@
         </select>
       </div>
     </div>
-  <div class="container">
-    <ul>
-      <li v-for="person in characterList" :key="person.id">
-        <div class="list">
+      <ul>
+        <li v-for="person in characterList" :key="person.id" class="list">
           <img :src="person.image" alt="" class="item_img" />
           <div class="item_info">
-            <p>Name: <RouterLink :to="getCharacterLocation(person)">
-              {{ person.name }}
-            </RouterLink></p>
+            <p>
+              Name:
+              <RouterLink :to="getCharacterLocation(person)">
+                {{ person.name }}
+              </RouterLink>
+            </p>
             <p>Species: {{ person.species }}</p>
           </div>
           <div class="episode_list-container">
-            <p>Episodes:  </p>
+            <p>Episodes:</p>
             <ul class="episode_list">
-              <li v-for="episode in person.episode" :key="episode.id"> 
+              <li v-for="episode in person.episodes" :key="episode.id">
                 <RouterLink :to="getEpisodeLocation(episode)">
-                  {{ console.log("render") }}
-                  {{ episode.data.name }}
-              </RouterLink>
-            </li>
-            <!-- <li> 
-                <RouterLink :to="getEpisodeLocation(person.episode)">
-                  {{ console.log("render") }}
-                  {{ person.episode }}
-              </RouterLink>
-            </li> -->
+                  {{ episode.name }}
+                </RouterLink>
+              </li>
             </ul>
           </div>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { usePersonInfoStore } from "../stores/personsInfo";
+import { useCharacterListStore } from "../stores/characterList";
 import { onMounted, ref, computed } from "vue";
-import { storeToRefs } from 'pinia'
+import { storeToRefs } from "pinia";
 
-const personsStore = usePersonInfoStore();
-const { persons } = storeToRefs(personsStore);
-const { getPersonInfo } = personsStore;
+const characterListStore = useCharacterListStore();
+const { characters } = storeToRefs(characterListStore);
+const { getCharactersInfo } = characterListStore;
 
-personsStore = {
-  setup(){
-    onMounted(async() => {
-  console.log("before get info")
-  await getPersonInfo()
-  console.log("after get info")
+onMounted(async () => {
+  console.log(characters.value)
+  await getCharactersInfo();
+  console.log(characters.value)
 });
-  }
-}
 
-
-const searchString = ref('');
-
-// console.log(personsStore)
-
+const searchString = ref("");
 
 const characterList = computed(() => {
-  if (!searchString.value) return persons.value;
+  console.log(characters.value)
+  if (!searchString.value) return characters.value;
 
-  // console.log(searchString.value)
-  return persons.value.filter(character => character.name.includes(searchString.value));
-})
-
-// console.log(usePersonInfoStore())
-// console.log(characterList)
-
-// const episodeList = computed(() => {
-//   // console.log(persons.value)
-//   persons.value.forEach(elem => {
-//     // console.log(elem.episode)
-//     return elem.episode
-//     // forEach(el => {
-//     //   console.log(el)
-//       // el.data
-//     // })
-//   })
-// }) 
-
+  return characters.value.filter((character) =>
+    character.name.toLowerCase().includes(searchString.value.trim().toLowerCase())
+  );
+});
 
 function getCharacterLocation(character) {
-  // console.log(character)
-  return { path: '/character', query: { id: character.id } }
+  return { path: "/character", query: { id: character.id } };
 }
 
 function getEpisodeLocation(episode) {
-
-  // console.log(episode)
-
-  return { path: '/episode', query: { id: episode }
-}}
-
-
-
-
-
-
-
+  return {
+    path: "/episode",
+    query: { id: episode.id },
+  };
+}
 </script>
 
 <style>
@@ -123,7 +85,9 @@ function getEpisodeLocation(episode) {
   font-size: 18px;
 }
 .container {
-  margin-top: 20px;
+  margin: 0 auto;
+  max-width: 70vw;
+  margin-top: 40px;
   max-height: 50vh;
   overflow: auto;
 }
@@ -142,8 +106,13 @@ function getEpisodeLocation(episode) {
   border-radius: 100px;
 }
 
+/* .list_container {
+  padding-top: 40px;
+} */
+
 .list {
   border: 2px solid rgb(59, 59, 59);
+  border-right: none;
   height: 120px;
   display: flex;
   align-items: center;
@@ -160,15 +129,15 @@ function getEpisodeLocation(episode) {
   width: 170px;
 }
 
-.episode_list-container{
+.episode_list-container {
   margin-left: 30px;
   display: flex;
   align-items: center;
 }
 
 .episode_list {
-margin-left: 15px;
-list-style-type: none;
+  margin-left: 15px;
+  list-style-type: none;
 }
 
 .search-input {
@@ -192,6 +161,8 @@ list-style-type: none;
 
 .search-container {
   display: inline-block;
+  position: fixed;
+  top: 65px;
 }
 
 .search-icon {
@@ -202,5 +173,4 @@ list-style-type: none;
   display: flex;
   align-items: stretch;
 }
-
 </style>
