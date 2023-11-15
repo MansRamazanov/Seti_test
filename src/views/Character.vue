@@ -42,7 +42,10 @@ onBeforeMount(async () => {
 <style>
 
 .character_container {
+  margin: 0 auto;
   display: flex;
+  max-width: 80vw;
+  margin-top: 40px;
 }
 
 .character_text {

@@ -32,7 +32,6 @@ export const useCharacterStore = defineStore("characterStore", () => {
         return;
       }
 
-      // characterData.episodes = await getEpisodes(characterData.episode);
       state.value = CHARACTER_STATE.FOUND;
       character.value = characterData;
     } catch (error) {
@@ -41,10 +40,6 @@ export const useCharacterStore = defineStore("characterStore", () => {
       return;
     }
   }
-
-  // function getEpisodes(episodeUrls) {
-  //   return Promise.all(episodeUrls.map((url) => axios.get(url)));
-  // }
 
   return { character, getCharacter, state };
 });

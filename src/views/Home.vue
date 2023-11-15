@@ -2,17 +2,42 @@
   <div class="container">
     <div class="list_container">
       <div class="search-container">
-      <div class="search">
-        <img src="../img/search-icon.svg" alt="иконка поиска" class="search-icon" />
-        <input class="search-input" type="text" placeholder="Имя персонажа" v-model="searchString" />
-        <select class="search-select" name="status">
-          <option class="search-select-option" value="">Status</option>
-          <option class="search-select-option" value="alive">Alive</option>
-          <option class="search-select-option" value="dead">Dead</option>
-          <option class="search-select-option" value="unknown">Unknown</option>
-        </select>
+        <div class="search">
+          <img
+            src="../img/search-icon.svg"
+            alt="иконка поиска"
+            class="search-icon"
+          />
+          <input
+            class="search-input"
+            type="text"
+            placeholder="Имя персонажа"
+            v-model="searchString"
+            v-on:change="onChangeSelected"
+          />
+          <label for="status" class="search_label"  v-on:change="onChangeSelected">Status</label>
+          <select
+            class="search-select"
+            name="status"
+            id="status"
+            v-model="selectValue"
+            v-on:change="onChangeSelected"
+          >
+          <option class="search-select-option" v-bind="{ status: Status }">
+            Status
+          </option>
+            <option class="search-select-option" v-bind="{ status: Alive }">
+              Alive
+            </option>
+            <option class="search-select-option" v-bind="{ status: Dead }">
+              Dead
+            </option>
+            <option class="search-select-option" v-bind="{ status: Unknown }">
+              unknown
+            </option>
+          </select>
+        </div>
       </div>
-    </div>
       <ul>
         <li v-for="person in characterList" :key="person.id" class="list">
           <img :src="person.image" alt="" class="item_img" />
@@ -51,21 +76,81 @@ const { characters } = storeToRefs(characterListStore);
 const { getCharactersInfo } = characterListStore;
 
 onMounted(async () => {
-  console.log(characters.value)
+  console.log(characters.value);
   await getCharactersInfo();
-  console.log(characters.value)
+  console.log(characters.value);
 });
 
-const searchString = ref("");
+let searchString = ref("");
+let selectValue = ref();
+console.log(selectValue);
+console.log(searchString)
 
-const characterList = computed(() => {
-  console.log(characters.value)
-  if (!searchString.value) return characters.value;
-
-  return characters.value.filter((character) =>
-    character.name.toLowerCase().includes(searchString.value.trim().toLowerCase())
-  );
+let characterList = computed(() => {
+  console.log(characters.value);
+  if (!searchString.value && selectValue._value === "Status") {
+    return characters.value;
+  } else if (!searchString.value && selectValue._value) {
+    return characters.value.filter(
+      (character) =>
+        character.status
+          .toLowerCase()
+          .includes(selectValue._value.toLowerCase()) &&
+          character.name
+    );
+  } else if (searchString.value && !selectValue._value) {
+    return characters.value.filter((character) =>
+      character.name
+        .toLowerCase()
+        .includes(searchString.value.trim().toLowerCase())
+    );
+  } else if (searchString.value && selectValue._value) {
+    return characters.value.filter(
+      (character) =>
+        character.name
+          .toLowerCase()
+          .includes(searchString.value.trim().toLowerCase()) &&
+        character.status
+          .toLowerCase()
+          .includes(selectValue._value.toLowerCase())
+    );
+  }
 });
+
+
+
+function onChangeSelected() {
+  characterList = computed(() => {
+  console.log(characters.value);
+  if (!searchString.value && !selectValue._value) {
+    return characters.value;
+  } else if (!searchString.value && selectValue._value) {
+    return characters.value.filter(
+      (character) =>
+        character.status
+          .toLowerCase()
+          .includes(selectValue._value.toLowerCase()) &&
+          character.name
+    );
+  } else if (searchString.value && !selectValue._value) {
+    return characters.value.filter((character) =>
+      character.name
+        .toLowerCase()
+        .includes(searchString.value.trim().toLowerCase())
+    );
+  } else if (searchString.value && selectValue._value) {
+    return characters.value.filter(
+      (character) =>
+        character.name
+          .toLowerCase()
+          .includes(searchString.value.trim().toLowerCase()) &&
+        character.status
+          .toLowerCase()
+          .includes(selectValue._value.toLowerCase())
+    );
+  }
+});
+}
 
 function getCharacterLocation(character) {
   return { path: "/character", query: { id: character.id } };
@@ -77,6 +162,8 @@ function getEpisodeLocation(episode) {
     query: { id: episode.id },
   };
 }
+
+onChangeSelected();
 </script>
 
 <style>
@@ -152,11 +239,17 @@ function getEpisodeLocation(episode) {
   margin-left: 10px;
   background: transparent;
   border: none;
+  border-bottom: 1px solid #444;
   color: white;
 }
 
 .search-select-option {
   color: black;
+}
+
+.search_label {
+  margin-top: 5px;
+  margin-left: 15px;
 }
 
 .search-container {
