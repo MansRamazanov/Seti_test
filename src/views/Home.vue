@@ -15,17 +15,14 @@
             v-model="searchString"
             v-on:change="onChangeSelected"
           />
-          <label for="status" class="search_label"  v-on:change="onChangeSelected">Status</label>
+          <label for="status" class="search_label">Status</label>
           <select
             class="search-select"
             name="status"
             id="status"
             v-model="selectValue"
-            v-on:change="onChangeSelected"
+            v-on:click="onChangeSelected"
           >
-          <option class="search-select-option" v-bind="{ status: Status }">
-            Status
-          </option>
             <option class="search-select-option" v-bind="{ status: Alive }">
               Alive
             </option>
